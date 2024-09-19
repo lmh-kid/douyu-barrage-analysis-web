@@ -15,7 +15,7 @@ export default defineConfig({
       svgrOptions: {},
     }),
     vitePluginForArco({
-      theme: '@arco-themes/react-arco-pro',
+      theme: '@arco-themes/react-xym-gw',
       modifyVars: {
         'arcoblue-6': setting.themeColor,
       },

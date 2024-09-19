@@ -11,11 +11,11 @@ import axios from 'axios';
 import rootReducer from './store';
 import PageLayout from './layout';
 import { GlobalContext } from './context';
-import Home from './pages/home';
 import checkLogin from './utils/checkLogin';
 import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useStorage';
 import './mock';
+import Article from './pages/article';
 
 const store = createStore(rootReducer);
 
@@ -85,7 +85,7 @@ function Index() {
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
-              <Route path="/home" component={Home} />
+              <Route path="/article" component={Article} />
               <Route path="/" component={PageLayout} />
             </Switch>
           </GlobalContext.Provider>
