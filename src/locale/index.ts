@@ -23,6 +23,8 @@ const i18n = {
     'SERVICES': 'SERVICES',
     'PRODUCTS': 'PRODUCTS',
     'CONtACT US': 'CONtACT US',
+    'Phone': 'Phone',
+    'Country': 'Country',
   },
   'zh-CN': {
     'Home': '首页',
@@ -48,6 +50,8 @@ const i18n = {
     'SERVICES': '服务',
     'PRODUCTS': '产品',
     'CONtACT US': '联系我们',
+    'Phone': '电话',
+    'Country': '国家/地区',
   },
 };
 

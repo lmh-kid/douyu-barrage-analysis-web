@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import Logo from '@/assets/logo.svg';
 import styles from './style/index.module.less';
-import { Menu } from '@arco-design/web-react';
+import { Button, Menu } from '@arco-design/web-react';
 import { useHistory } from 'react-router-dom';
 import useLocale from '@/utils/useLocale';
 import locale from '@/locale';
@@ -75,7 +75,7 @@ function Topbar({ show }: { show: boolean }) {
           <Menu.Item key="SERVICES">{t['SERVICES']}</Menu.Item>
           <Menu.Item key="PRODUCTS">{t['PRODUCTS']}</Menu.Item>
           <Menu.Item key="CONtACT US">{t['CONtACT US']}</Menu.Item>
-          <Menu.Item key="XXX">XXX</Menu.Item>
+          <Menu.Item key="XXX"><Button>Q And A</Button></Menu.Item>
         </Menu>
       </div>
       <SendMailModal visible={visible} setVisible={setVisible} />

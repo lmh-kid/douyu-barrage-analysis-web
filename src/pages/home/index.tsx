@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import 'cherry-markdown/dist/cherry-markdown.css';
 import {
   Button,
-  Card,
   Form,
   Input,
   Link,
@@ -96,7 +95,7 @@ function Home() {
 
       {/* WHAT WE DO */}
       <div>
-        <Typography.Title className="base-box pt50 pb50 heading1" heading={1}>
+        <Typography.Title className="base-box pb50 heading1" heading={1}>
           {t['WHAT WE DO']}
         </Typography.Title>
         <div className="base-box pb50">

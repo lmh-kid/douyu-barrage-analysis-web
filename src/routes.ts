@@ -30,6 +30,10 @@ export const routes: IRoute[] = [
     name: 'Home',
     key: 'home',
   },
+  {
+    name: 'Products',
+    key: 'products',
+  },
 ];
 
 export const getName = (path: string, routes) => {
