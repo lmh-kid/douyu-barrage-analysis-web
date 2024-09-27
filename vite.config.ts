@@ -9,6 +9,20 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
+  server: {
+    host: '0.0.0.0', // 允许外部访问
+    port: 8000, // 设置默认启动端口为 3000
+    open: true, // 启动时自动打开浏览器
+    https: false, // 是否启用 HTTPS
+    proxy: {
+      // 将所有以 /api 开头的请求代理到本地的 3000 端口
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   plugins: [
     react(),
     svgrPlugin({

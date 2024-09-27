@@ -14,7 +14,7 @@ import { GlobalContext } from './context';
 import checkLogin from './utils/checkLogin';
 import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useStorage';
-import './mock';
+import '@/api/interceptor';
 import Article from './pages/article';
 
 const store = createStore(rootReducer);
@@ -48,11 +48,11 @@ function Index() {
   }
 
   useEffect(() => {
-    if (checkLogin()) {
-      fetchUserInfo();
-    } else if (window.location.pathname.replace(/\//g, '') !== 'home') {
-      window.location.pathname = '/home';
-    }
+    // if (checkLogin()) {
+    //   fetchUserInfo();
+    // } else if (window.location.pathname.replace(/\//g, '') !== 'home') {
+    //   window.location.pathname = '/home';
+    // }
   }, []);
 
   useEffect(() => {
