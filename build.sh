@@ -9,8 +9,8 @@ cd /root/code/douyu-barrage-analysis-web
 git fetch --all && git reset --hard origin/main
 
 # 更新与构建项目
-yarn install
-yarn build
+# yarn install
+# yarn build
 
 # 构建 Docker 镜像
 tag=$(date "+%Y%m%d%H%M")
