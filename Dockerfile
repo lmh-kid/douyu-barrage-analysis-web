@@ -1,17 +1,13 @@
-# 进入指定目录
-cd /root/code/douyu-barrage-analysis-web
+# 使用Nginx镜像作为基础镜像
+FROM nginx
 
-# 更新代码
-git fetch --all && git reset --hard origin/main
 
-# 更新与构建项目
-yarn install
-yarn build
+# 将前端应用程序静态文件复制到Nginx默认网站目录
+COPY dist/ /usr/share/nginx/html/
 
-# 构建 Docker 镜像
-tag=$(date "+%Y%m%d%H%M")
-docker build -f Dockerfile -t douyu-web:$tag .
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# 删除旧容器并启动新容器
-docker stop douyu-web && sudo docker rm douyu-web
-docker run -p 89:80 -d --name douyu-web douyu-web:$tag
+# 暴露Nginx的默认端口（80端口）
+EXPOSE 80
+# 启动Nginx服务
+CMD ["nginx", "-g", "daemon off;"]
