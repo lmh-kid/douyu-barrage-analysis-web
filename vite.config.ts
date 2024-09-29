@@ -9,7 +9,6 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
-  mode: 'production',
   server: {
     host: '0.0.0.0', // 允许外部访问
     port: 8000, // 设置默认启动端口为 3000
@@ -18,7 +17,8 @@ export default defineConfig({
     proxy: {
       // 将所有以 /api 开头的请求代理到本地的 3000 端口
       '/api': {
-        target: 'http://localhost:3000',
+        // target: 'http://localhost:3000',
+        target: 'http://47.113.192.155:82',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
