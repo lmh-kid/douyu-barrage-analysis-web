@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
+  mode: 'production',
   server: {
     host: '0.0.0.0', // 允许外部访问
     port: 8000, // 设置默认启动端口为 3000
