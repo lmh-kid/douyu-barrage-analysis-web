@@ -18,4 +18,4 @@ docker build -f Dockerfile -t douyu-web:$tag .
 
 # 删除旧容器并启动新容器
 docker stop douyu-web && sudo docker rm douyu-web
-docker run -p 89:80 -d --name douyu-web douyu-web:$tag
+docker run -p 80:80 -d --name douyu-web douyu-web:$tag
