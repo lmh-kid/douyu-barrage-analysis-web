@@ -93,7 +93,7 @@ function PageLayout() {
   }, [pathname]);
   return (
     <Layout className={styles.layout}>
-      <Topbar show={showNavbar} />
+      {/* <Topbar show={showNavbar} /> */}
       {userLoading ? (
         <Spin className={styles['spin']} />
       ) : (

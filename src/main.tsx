@@ -48,11 +48,11 @@ function Index() {
   }
 
   useEffect(() => {
-    // if (checkLogin()) {
-    //   fetchUserInfo();
-    // } else if (window.location.pathname.replace(/\//g, '') !== 'home') {
-    //   window.location.pathname = '/home';
-    // }
+    if (checkLogin()) {
+      fetchUserInfo();
+    } else if (window.location.pathname.replace(/\//g, '') !== 'home') {
+      window.location.pathname = '/home';
+    }
   }, []);
 
   useEffect(() => {

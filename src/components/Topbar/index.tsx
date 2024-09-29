@@ -5,7 +5,7 @@ import { Button, Menu } from '@arco-design/web-react';
 import { useHistory } from 'react-router-dom';
 import useLocale from '@/utils/useLocale';
 import locale from '@/locale';
-import SendMailModal from '@/pages/home/SendMailModal';
+// import SendMailModal from '@/pages/home/SendMailModal';
 
 function Topbar({ show }: { show: boolean }) {
   const t = useLocale(locale);
@@ -78,7 +78,7 @@ function Topbar({ show }: { show: boolean }) {
           <Menu.Item key="XXX"><Button>Q And A</Button></Menu.Item>
         </Menu>
       </div>
-      <SendMailModal visible={visible} setVisible={setVisible} />
+      {/* <SendMailModal visible={visible} setVisible={setVisible} /> */}
     </div>
   );
 }

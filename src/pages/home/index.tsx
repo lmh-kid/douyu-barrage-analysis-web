@@ -1,247 +1,92 @@
-import React, { useEffect, useState } from 'react';
-import 'cherry-markdown/dist/cherry-markdown.css';
-import {
-  Button,
-  Form,
-  Input,
-  Link,
-  Typography,
-} from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
-import { useLocation } from 'react-router-dom';
-import locale from '@/locale';
+import React from 'react';
+import { Button, Form, Input, Radio, Select } from '@arco-design/web-react';
+import ReactECharts from 'echarts-for-react';
+import { getDouYuBarrageAnalyze } from '@/api/douyu';
 
-import '@/style/common.less';
-import './index.less';
+const RadioGroup = Radio.Group;
 
 function Home() {
-  const t = useLocale(locale);
-  const [formData, setFormData] = useState({});
+  const [sectionList, setSectionList] = React.useState<any>([]);
+  const [eChartData, setEChartData] = React.useState<any>({});
+  const [formData, setFormData] = React.useState<any>({
+    upId: '8bLA6mVnbdMa',
+    requestUrl: 'https://v.douyu.com/show/ERALvEq8kE1v1Vw0'
+  });
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const location = useLocation();
+  const option = React.useMemo(() => {
+    return {
+      xAxis: {
+        type: 'category',
+        data: eChartData?.list?.xAxis,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      animation: false,
+      series: [
+        {
+          data: eChartData?.list?.data,
+          type: 'line',
+        },
+      ],
+    };
+  }, [eChartData?.list?.data, eChartData?.list?.xAxis]);
 
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+  const getData = async () => {
+    try {
+      setLoading(true);
+      const res = await getDouYuBarrageAnalyze(formData);
+      setLoading(false);
+      setSectionList(res);
+    } catch (error) {
+      setLoading(false);
     }
-  }, [location]);
-
-  const onValuesChange = (value, values) => {
-    setFormData(values);
   };
 
   return (
     <div className="base-page">
       <div className="top-card-bg-box">
-        <div className="join-box">
-          <div className="left-box">
-            <div className="title">{t['Expert and Excellent']}</div>
-            <div className="text">{t['HomepageIntroduction']}</div>
-          </div>
-        </div>
-        <div className="base-box"></div>
+        <Form initialValues={formData} onValuesChange={(value, values) => {
+          console.log('values', values);
+          setFormData(values);
+        }}>
+          <Form.Item field="upId" label="主播">
+            <Select className="w400" options={[{
+              label: '衣锦夜行',
+              value: '8bLA6mVnbdMa',
+            }]}></Select>
+          </Form.Item>
+          <Form.Item field="requestUrl" label="回放地址">
+            <Input className="w400" />
+          </Form.Item>
+          <Form.Item label=" ">
+            <Button type='primary' loading={loading} className="w400 mb20" onClick={getData}>请求数据</Button>
+          </Form.Item>
+          <Form.Item label="场次">
+            <RadioGroup
+              options={sectionList.map((i, index) => {
+                return {
+                  label: i.show_remark,
+                  value: index,
+                };
+              })}
+              size='default'
+              type='button'
+              defaultValue='Beijing'
+              style={{ marginBottom: 20 }}
+              onChange={(value) => {
+                setEChartData(sectionList?.[value]);
+              }}
+            />
+          </Form.Item>
+        </Form>
       </div>
-
-      {/* WHO WE ARE */}
-      <div id="WHOWEARE" className='color-fill-1'>
-        <Typography.Title className="base-box pt50 pb50 heading1" heading={1}>
-          {t['WHO WE ARE']}
-        </Typography.Title>
-        <div className="base-box pb50">
-          <div className="who-box">
-            <div className="who-title">
-              <div className="who-title-icon"></div>
-              <Typography.Title className="" heading={4}>
-                {t['Extensive industry experience']}
-              </Typography.Title>
-            </div>
-            <div className="who-text">
-              <Typography.Text className="">{t['Our team']}</Typography.Text>
-            </div>
-          </div>
-
-          <div className="who-box">
-            <div className="who-title">
-              <div className="who-title-icon"></div>
-              <Typography.Title className="" heading={4}>
-                {t['Rich supplier network']}
-              </Typography.Title>
-            </div>
-            <div className="who-text">
-              <Typography.Text className="">
-                {t['We have an extensive network']}
-              </Typography.Text>
-            </div>
-          </div>
-
-          <div className="who-box">
-            <div className="who-title">
-              <div className="who-title-icon"></div>
-              <Typography.Title className="" heading={4}>
-                {t['Cultural and language proficiency']}
-              </Typography.Title>
-            </div>
-            <div className="who-text">
-              <Typography.Text className="">
-                {t['Our expertise in cross-cultural']}
-              </Typography.Text>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* WHAT WE DO */}
-      <div>
-        <Typography.Title className="base-box pb50 heading1" heading={1}>
-          {t['WHAT WE DO']}
-        </Typography.Title>
-        <div className="base-box pb50">
-          <div className="do-box pr10">
-            <div
-              className="do-box-bg"
-              style={{ backgroundImage: `url('/src/assets/bg/test.png')` }}
-            >
-              <div className="who-title">
-                <div className="who-title-icon"></div>
-                <Typography.Title className="" heading={4}>
-                  {t['Extensive industry experience']}
-                </Typography.Title>
-              </div>
-              <div className="who-text">
-                <Typography.Text className="">{t['Our team']}</Typography.Text>
-              </div>
-            </div>
-          </div>
-
-          <div className="do-box pr10 pl10">
-            <div
-              className="do-box-bg"
-              style={{ backgroundImage: `url('/src/assets/bg/test.png')` }}
-            >
-              <div className="who-title">
-                <div className="who-title-icon"></div>
-                <Typography.Title className="" heading={4}>
-                  {t['Rich supplier network']}
-                </Typography.Title>
-              </div>
-              <div className="who-text">
-                <Typography.Text className="">
-                  {t['We have an extensive network']}
-                </Typography.Text>
-              </div>
-            </div>
-          </div>
-
-          <div className="do-box pl10">
-            <div
-              className="do-box-bg"
-              style={{ backgroundImage: `url('/src/assets/bg/test.png')` }}
-            >
-              <div className="who-title">
-                <div className="who-title-icon"></div>
-                <Typography.Title className="" heading={4}>
-                  {t['Cultural and language proficiency']}
-                </Typography.Title>
-              </div>
-              <div className="who-text">
-                <Typography.Text className="">
-                  {t['Our expertise in cross-cultural']}
-                </Typography.Text>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Learn more and start your sourcing */}
-      <div id='SERVICES' className="long-bg-box">
-        <div
-          className="base-box long-bg-image"
-          style={{ backgroundImage: `url('/src/assets/bg/test.png')` }}
-        >
-          <div className="long-bg-text-box">
-            <div className="">
-              <Typography.Title className="pt50 long-bg-text-title" heading={2}>
-                {t['Learn more and start your sourcing']}
-              </Typography.Title>
-            </div>
-            <div>
-              <Typography.Text className="long-bg-text-text">
-                {t['Start cooperating']}
-              </Typography.Text>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div className="base-box pb50">
-          <div className="who-box">
-            <div className="who-title">
-              <div className="who-title-icon"></div>
-              <Typography.Title className="" heading={4}>
-                {t['Links']}
-              </Typography.Title>
-            </div>
-            <div className="who-text">
-              <div>
-                <Link>FACEBOOK</Link>
-              </div>
-              <div>
-                <Link>YOUTUBE</Link>
-              </div>
-              <div>
-                <Link>TIKTOK</Link>
-              </div>
-              <div>
-                <Link>INS</Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="who-box">
-            <div className="who-title">
-              <div className="who-title-icon"></div>
-              <Typography.Title className="" heading={4}>
-                {t['Contact Us']}
-              </Typography.Title>
-            </div>
-            <div className="who-text">
-              <div>
-                <Typography.Text className="">Mail:</Typography.Text>
-              </div>
-              <div>
-                <Typography.Text className="">WhatsApp:</Typography.Text>
-              </div>
-            </div>
-          </div>
-
-          <div className="who-box">
-            <div className="right-box border-radius-large">
-              <Form
-                className="user-form"
-                onValuesChange={onValuesChange}
-                layout="vertical"
-              >
-                <Form.Item field="name" label={t['Name']}>
-                  <Input />
-                </Form.Item>
-                <Form.Item field="email" label={t['Email']}>
-                  <Input />
-                </Form.Item>
-                <Form.Item field="nmessage" label={t['Message']}>
-                  <Input.TextArea />
-                </Form.Item>
-              </Form>
-              <Button type="primary" long>
-                {t['Send']}
-              </Button>
-            </div>
-          </div>
-        </div>
+      <div style={{ width: '100%', height: '600px' }}>
+        <ReactECharts style={{ width: '100%', height: '100%' }} option={option} />
       </div>
     </div>
   );
