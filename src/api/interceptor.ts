@@ -12,7 +12,8 @@ export interface HttpResponse<T = unknown> {
   data: T;
 }
 
-axios.defaults.baseURL = '/api/'
+axios.defaults.baseURL = '/api/';
+axios.defaults.timeout = 80000;
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // 为请求设置token
