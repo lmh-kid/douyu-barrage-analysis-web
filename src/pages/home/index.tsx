@@ -16,6 +16,17 @@ function Home() {
   });
   const [loading, setLoading] = React.useState<boolean>(false);
 
+  const zhuboList = [
+    {
+      label: '衣锦夜行',
+      value: '8bLA6mVnbdMa',
+    },
+    {
+      label: 'AMS、AMS',
+      value: '8PAbV5x38AO1',
+    }
+  ]
+
   const option = React.useMemo(() => {
     return {
       xAxis: {
@@ -64,10 +75,7 @@ function Home() {
           setFormData(values);
         }}>
           <Form.Item field="upId" required rules={[{ required: true, message: '请输入主播Uid' }]} label="主播">
-            <Select className="w400" options={[{
-              label: '衣锦夜行',
-              value: '8bLA6mVnbdMa',
-            }]}></Select>
+            <Select className="w400" options={zhuboList}></Select>
           </Form.Item>
           <Form.Item required rules={[{ required: true, message: '请输入回放地址' }]} field="requestUrl" label="回放地址">
             <Input className="w400" />
