@@ -304,11 +304,6 @@
     "@babel/types" "^7.12.12"
     "@types/node" "^16.11.10"
 
-"@arco-themes/react-arco-pro@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.npmmirror.com/@arco-themes/react-arco-pro/-/react-arco-pro-0.0.7.tgz#d1665391ebf3bfd702ce0d94680254baada2cc8d"
-  integrity sha512-ymLuKbfwdYha9noATRQXe5qQH4THjqlEkZTWtAysq4GssYeemNObof51NnuJSMyQtdTS8KC7r//+zHjZrk4dcA==
-
 "@arco-themes/react-xym-gw@0.0.5":
   version "0.0.5"
   resolved "https://registry.npmmirror.com/@arco-themes/react-xym-gw/-/react-xym-gw-0.0.5.tgz#b8db804cf3d892727348a7fd69e33ab365f96139"

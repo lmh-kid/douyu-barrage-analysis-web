@@ -15,7 +15,8 @@ import checkLogin from './utils/checkLogin';
 import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useStorage';
 import '@/api/interceptor';
-import Article from './pages/article';
+import '@arco-themes/react-xym-gw/index.less';
+import '@/style/common.less';
 
 const store = createStore(rootReducer);
 
@@ -85,7 +86,6 @@ function Index() {
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
-              <Route path="/article" component={Article} />
               <Route path="/" component={PageLayout} />
             </Switch>
           </GlobalContext.Provider>

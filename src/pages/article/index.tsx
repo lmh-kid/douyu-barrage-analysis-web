@@ -5,7 +5,6 @@ import { Button, Card, Form, Input, Link } from '@arco-design/web-react';
 import useLocale from '@/utils/useLocale';
 import locale from '@/locale';
 
-import '@/style/common.less';
 import './index.less';
 import Topbar from '@/components/TopbarOm';
 
