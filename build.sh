@@ -1,8 +1,6 @@
 #!/bin/bash
 set -x
 # 进入指定目录
-cd /root/release/AwsomeChat-FE
-# 进入指定目录
 cd /root/code/douyu-barrage-analysis-web
 
 # 更新代码
