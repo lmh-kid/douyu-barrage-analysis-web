@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Input, Radio, Select } from '@arco-design/web-react';
+import {
+  Button,
+  Form,
+  Input,
+  Radio,
+  Select,
+  Slider,
+} from '@arco-design/web-react';
 import ReactECharts from 'echarts-for-react';
 import { getDouYuBarrageAnalyze } from '@/api/douyu';
 
@@ -24,8 +31,8 @@ function Home() {
     {
       label: 'AMS、AMS',
       value: '8PAbV5x38AO1',
-    }
-  ]
+    },
+  ];
 
   const option = React.useMemo(() => {
     return {
@@ -37,7 +44,29 @@ function Home() {
         type: 'value',
       },
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        formatter: (params) => {
+          const index = params[0].dataIndex;
+          const tooltipContent = params[0].value;
+          const tooltipArray = [
+            `时间: ${params[0].axisValueLabel}`,
+            `弹幕总数: ${tooltipContent}`,
+            `————————————弹幕详情————————————`,
+            `${eChartData?.list?.tooltip?.[index]
+              ?.map((i) => {
+                return (
+                  '<span style="width: 410px;display: inline-block;overflow: hidden;">' +
+                  i.content +
+                  '(' +
+                  i.count +
+                  ')' +
+                  '</span>'
+                );
+              })
+              ?.join('<br/>')}`,
+          ];
+          return tooltipArray?.join('<br/>');
+        },
       },
       animation: false,
       series: [
@@ -47,7 +76,11 @@ function Home() {
         },
       ],
     };
-  }, [eChartData?.list?.data, eChartData?.list?.xAxis]);
+  }, [
+    eChartData?.list?.data,
+    eChartData?.list?.tooltip,
+    eChartData?.list?.xAxis,
+  ]);
 
   const getData = async () => {
     try {
@@ -55,6 +88,7 @@ function Home() {
       const res = await getDouYuBarrageAnalyze({
         upId: formData.upId,
         requestUrl: formData.requestUrl,
+        timeStep: formData.timeStep,
       });
       setLoading(false);
       setSectionList(res);
@@ -64,48 +98,90 @@ function Home() {
   };
 
   useEffect(() => {
-    setEChartData(sectionList[formData.sectionIndex])
-  }, [sectionList, formData.sectionIndex])
+    setEChartData(sectionList[formData.sectionIndex]);
+  }, [sectionList, formData.sectionIndex]);
 
   return (
     <div className="base-page">
       <div className="top-card-bg-box">
-        <Form form={form} initialValues={formData} onValuesChange={(value, values) => {
-          console.log('values', values);
-          setFormData(values);
-        }}>
-          <Form.Item field="upId" required rules={[{ required: true, message: '请输入主播Uid' }]} label="主播">
-            <Select className="w400" options={zhuboList}></Select>
+        <Form
+          form={form}
+          initialValues={formData}
+          onValuesChange={(value, values) => {
+            setFormData(values);
+          }}
+        >
+          {/* 主播Id */}
+          <Form.Item
+            field="upId"
+            required
+            rules={[{ required: true, message: '请输入主播Uid' }]}
+            label="主播"
+          >
+            <Select
+              className="w400"
+              allowCreate={true}
+              options={zhuboList}
+            ></Select>
           </Form.Item>
-          <Form.Item required rules={[{ required: true, message: '请输入回放地址' }]} field="requestUrl" label="回放地址">
+          {/* 弹幕统计间隔 */}
+          <Form.Item field="timeStep" required label="弹幕统计间隔(秒)">
+            <Slider
+              defaultValue={6}
+              showInput
+              className="w400"
+              min={1}
+              max={30}
+            />
+          </Form.Item>
+          {/* 回放地址 */}
+          <Form.Item
+            required
+            rules={[{ required: true, message: '请输入回放地址' }]}
+            field="requestUrl"
+            label="回放地址"
+          >
             <Input className="w400" />
           </Form.Item>
+          {/* 请求数据 */}
           <Form.Item label=" ">
-            <Button type='primary' loading={loading} className="w400 mb20" onClick={() => {
-              form.validate((res: any) => {
-                if (!res) {
-                  getData()
-                }
-              })
-            }}>请求数据</Button>
+            <Button
+              type="primary"
+              loading={loading}
+              className="w400 mb20"
+              onClick={() => {
+                form.validate((res: any) => {
+                  if (!res) {
+                    getData();
+                  }
+                });
+              }}
+            >
+              请求数据
+            </Button>
           </Form.Item>
           <Form.Item field="sectionIndex" label="场次">
             <RadioGroup
-              options={sectionList.map((i: { show_remark: any; }, index: any) => {
-                return {
-                  label: i.show_remark,
-                  value: index,
-                };
-              })}
-              size='default'
-              type='button'
+              options={sectionList.map(
+                (i: { show_remark: any }, index: any) => {
+                  return {
+                    label: i.show_remark,
+                    value: index,
+                  };
+                }
+              )}
+              size="default"
+              type="button"
               style={{ marginBottom: 20 }}
             />
           </Form.Item>
         </Form>
       </div>
       <div style={{ width: '100%', height: '600px' }}>
-        <ReactECharts style={{ width: '100%', height: '100%' }} option={option} />
+        <ReactECharts
+          style={{ width: '100%', height: '100%' }}
+          option={option}
+        />
       </div>
     </div>
   );

@@ -17,8 +17,8 @@ export default defineConfig({
     proxy: {
       // 将所有以 /api 开头的请求代理到本地的 3000 端口
       '/api': {
-        // target: 'http://localhost:3000',
-        target: 'http://47.113.192.155:82',
+        target: 'http://localhost:3000',
+        // target: 'http://47.113.192.155:82',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
